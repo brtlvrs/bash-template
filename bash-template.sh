@@ -1,6 +1,7 @@
 #!/bin/bash
 source ./functions/functions.sh
 
+#-- functions
 _usage(){
     cat <<EOF
 
@@ -13,6 +14,7 @@ _usage(){
     -h | --help             This message
     -f | --fruit <value>    fruit
     -c | --color <value>    color
+    -w | --world            run hello world routine
 
 EOF
 }
@@ -90,6 +92,11 @@ _procesArgs(){
                 echo "Color: $color"
                 continue
                 ;;
+            --world|-w) # hel world
+                _hasValue || return 1
+                common::helloWorld
+                continue
+                ;;
             --help|-h) # help message
                 _hasValue
                 _usage
@@ -103,6 +110,7 @@ _procesArgs(){
     done
 }
 
+#-- MAIN routine
 _guardrails "$@" || exit 1
 _procesArgs "$@" || exit 1
 
