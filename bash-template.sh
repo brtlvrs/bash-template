@@ -32,7 +32,8 @@ _procesArgs(){
     local args=("$@")
     local processed_args=()
 
-    _isNextArgValue(){
+    _hasNoValue(){
+        # Used to check if an argument has no value
         if [[ $((i + 1)) -ge $total_args ]]; then
             echo "WARNING: No value given for $arg" >&2
             return 1
@@ -42,6 +43,15 @@ _procesArgs(){
             return 1
         fi
         ((i++)) # Skip the next element since it's a value
+        return 0
+    }
+
+    _hasValue(){
+        # Used to check if an argument is followed by a value
+        if [[  $((i+1)) -lt $total_args ]] && [[  "$next_arg" != -* ]]; then
+            echo "WARNING: didn't expect a value argument after ${processed_args[$i]}"
+            return 1
+        fi
         return 0
     }
 
@@ -60,32 +70,30 @@ _procesArgs(){
         fi
     done
 
-    # Return the processed arguments
     local total_args="${#processed_args[@]}"
 
+    # proces all arguments
     for ((i = 0; i < ${#processed_args[@]}; i++)); do
         local arg="${processed_args[$i]}"
         local next_arg="${processed_args[$((i + 1))]}"
+
         case "$arg" in
             --fruit|-f)
-                _isNextArgValue || return 1
+                _hasNoValue || return 1
                 fruit="$next_arg"
                 echo "Fruit: $fruit"
-                ((i++)) # Skip the next element since it's a value
                 continue
                 ;;
             --color|-c)
-                _isNextArgValue || return 1
+                _hasNoValue || return 1
                 color="$next_arg"
                 echo "Color: $color"
                 continue
                 ;;
-            --help|-h)
-                if [[  $((i+1)) -lt $total_args ]] && [[  "$next_arg" != -* ]]; then
-                    echo "WARNING: didn't expect a value argument after ${processed_args[$i]}"
-                fi
+            --help|-h) # help message
+                _hasValue
                 _usage
-                continue
+                return 0 # exit 
                 ;;
             *)
                 echo "WARNING: Unknown argument: ${processed_args[$i]}"
@@ -96,5 +104,5 @@ _procesArgs(){
 }
 
 _guardrails "$@" || exit 1
-_procesArgs "$@"
+_procesArgs "$@" || exit 1
 
