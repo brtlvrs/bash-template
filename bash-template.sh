@@ -7,19 +7,27 @@ _usage(){
 
             bash-template.sh
 
-    bla bla bla bla usage bla
+    This is a template or demo bash script, containing some standardized functions.
+    The purpose is also to demonstrate some solutions for using arguments.
+    The way arguments are handled is that they are first moved into an array. 
+    And then each argument that has a format like -key=value is split into arguments
+    
 
     Options:
 
     -h | --help             This message
-    -f | --fruit <value>    fruit
-    -c | --color <value>    color
+    -f | --fruit <value>    [string] fruit
+    -c | --color <value>    [int] color
     -w | --world            run hello world routine
 
 EOF
 }
 
 _guardrails(){
+    # this is the guardrails function. 
+    # in the function all guardrails are defined for this script.
+    # when a guardrail is hit the fubction returns status 1, else it will return status 0
+
     # check if we have at least one argument
     if [[ $# -eq 0 ]]; then
         echo "WARNING: Expected at least one argument, got none.">&2
@@ -29,13 +37,22 @@ _guardrails(){
 }
 
 _procesArgs(){
+# This function proces all arguments.
+# first it will create an array and pushes each argument as an item into the array.
+# when an argument is in the format key=value, it is split into two arguments, and each one
+# is pushed into the array.
+# Then it walks through the array and processes the arguments with a case statement.
 
 # Initialize an array to hold the processed arguments
     local args=("$@")
     local processed_args=()
 
+    # local functions
+
     _hasNoValue(){
-        # Used to check if an argument has no value
+        # argument guardrail function, to be used when an argument should have a value.
+        # returns 0 when an argument has a value, returns 1 when it doesn't
+
         if [[ $((i + 1)) -ge $total_args ]]; then
             echo "WARNING: No value given for $arg" >&2
             return 1
@@ -49,7 +66,9 @@ _procesArgs(){
     }
 
     _hasValue(){
-        # Used to check if an argument is followed by a value
+        # argument guardrail function, to be used when an argument shouldn't have a value
+        # retuns 0 when an argument hasn't a value, returns  when it does
+
         if [[  $((i+1)) -lt $total_args ]] && [[  "$next_arg" != -* ]]; then
             echo "WARNING: didn't expect a value argument after ${processed_args[$i]}"
             return 1
@@ -92,17 +111,17 @@ _procesArgs(){
                 echo "Color: $color"
                 continue
                 ;;
-            --world|-w) # hel world
+            --world|-w) # hello world example
                 _hasValue || return 1
                 common::helloWorld
                 continue
                 ;;
-            --help|-h) # help message
+            --help|-h) # displays the help message
                 _hasValue
                 _usage
                 return 0 # exit 
                 ;;
-            *)
+            *) # unknown argument, let's quit
                 echo "WARNING: Unknown argument: ${processed_args[$i]}"
                 return 1
                 ;;
