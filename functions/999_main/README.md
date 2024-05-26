@@ -10,7 +10,7 @@
 |:---|:---|:---|
 [_usage](#_usage)|usage.sh|Displays the usage or help message|
 [_guardrails](#_guardrails)|guardrails.sh|Guardrails for script
-[_processArgs](_processArgs)|processArgs.sh|Routine to process script arguments
+[_processArgs](#_processargs)|processArgs.sh|Routine to process script arguments
 
 ## _usage
 
