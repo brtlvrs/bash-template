@@ -62,29 +62,35 @@ main::_procesArgs(){
 
         case "$arg" in
             --fruit|-f)
+                # echo fruit argument
                 _hasNoValue || return 1
                 fruit="$next_arg"
                 echo "Fruit: $fruit"
                 continue
                 ;;
             --color|-c)
+                # echo collor argument
                 _hasNoValue || return 1
                 color="$next_arg"
                 echo "Color: $color"
                 continue
                 ;;
-            --world|-w) # hello world example
+            --world|-w) 
+                # run demp function
                 _hasValue || return 1
                 common::helloWorld
                 continue
                 ;;
-            --help|-h) # displays the help message
+            --help|-h)
+                # displays usage / help message
                 _hasValue
-                _usage
+                main::_usage
                 return 0 # exit 
                 ;;
-            *) # unknown argument, let's quit
-                echo "WARNING: Unknown argument: ${processed_args[$i]}"
+            *) 
+                # unknown argument, let's quit
+                echo "WARNING: Unknown argument: ${processed_args[$i]}" >&2
+                main::_usage
                 return 1
                 ;;
         esac
