@@ -1,14 +1,14 @@
-# _common
+# demo
 
 |Folder|Purpose|
 |:---|:---|
-|_common|common functions|
+|demo|demonstration of structured coding|
 
 # functions
 
 |function|file|Purpose|
 |:---|:---|:---|
-|[helloWorld](#helloWorld)|helloWorld.sh|The famous Hello World function|
+|[demo::test](#test)|helloWorld.sh|The famous Hello World function|
 
 ## helloWorld
 
@@ -21,4 +21,3 @@ common::helloWorld
 ```
 
 Yes sometines it is that simple
-
