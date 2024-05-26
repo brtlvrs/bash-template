@@ -1,5 +1,5 @@
 _usage(){
-    cat <<EOF
+    cat <<'EOF'
 
             bash-template.sh
 
