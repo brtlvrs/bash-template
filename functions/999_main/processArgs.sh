@@ -1,4 +1,4 @@
-script::_procesArgs(){
+main::_procesArgs(){
 # This function proces all arguments.
 # first it will create an array and pushes each argument as an item into the array.
 # when an argument is in the format key=value, it is split into two arguments, and each one

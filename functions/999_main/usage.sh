@@ -1,4 +1,4 @@
-_usage(){
+main::_usage(){
     cat <<'EOF'
 
             bash-template.sh
