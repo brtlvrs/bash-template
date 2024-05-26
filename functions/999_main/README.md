@@ -31,7 +31,7 @@ none
 _usage
 ```
 
-## _guardrails \<arg1\>
+## _guardrails
 
 This is the guardrails function for the script   
 When a guardrail is triggered / hit, it will display a warning and returns with status 1.
@@ -50,3 +50,15 @@ _guardrails "$@" || exit 1
 
 ## _processArgs
 
+Proces script arguments.
+
+### usage
+
+``` bash
+_processArgs "$@" || exit 1
+```
+|||
+|---|---|
+|```$@```| passes all arguments to the _guardrails function|
+|```\|\|```| OR call when the  function returns with status 1|
+|```exit 1```|exit the script with status/error code 1|
