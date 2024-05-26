@@ -14,4 +14,39 @@
 
 ## _usage
 
-This function displays the help message when the script is called with option -h or --help. It is also called when a unknown and/or invalid argument is passed to the script.
+This function displays the help message when the script is called with option -h or --help.   
+It is also called when a unknown and/or invalid argument is passed to the script.
+
+### arguments
+
+none
+
+### result
+
+none
+
+### example
+
+``` bash
+_usage
+```
+
+## _guardrails \<arg1\>
+
+This is the guardrails function for the script   
+When a guardrail is triggered / hit, it will display a warning and returns with status 1.
+When no guardrail is hit, it will return status 0.
+
+### usage
+
+``` bash
+_guardrails "$@" || exit 1
+```
+|||
+|---|---|
+|```$@```| passes all arguments to the _guardrails function|
+|```\|\|```| OR call when the _guardrails function returns with status 1 (this happens when a guardrail is hit)|
+|```exit 1```|exit the script with status/error code 1|
+
+## _processArgs
+
