@@ -1,4 +1,4 @@
-_banner(){
+script::_banner(){
     cat <<'EOF'
 
 

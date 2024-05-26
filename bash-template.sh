@@ -2,7 +2,7 @@
 source ./functions/functions.sh
 
 #-- MAIN routine
-_banner
-_guardrails "$@" || exit 1
-_procesArgs "$@" || exit 1
+script::_banner
+script::_guardrails "$@" || exit 1
+script::_procesArgs "$@" || exit 1
 

@@ -1,4 +1,4 @@
-_guardrails(){
+script::_guardrails(){
     # this is the guardrails function. 
     # in the function all guardrails are defined for this script.
     # when a guardrail is hit the fubction returns status 1, else it will return status 0
