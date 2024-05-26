@@ -5,7 +5,7 @@
 # the order of sourcing is alphabeticly, based on the files full path.
 
 _source_functions() {
-    # function to find al bash scripts recursivly from all subfolders under the given base_path
+    # private function to find al bash scripts recursivly from all subfolders under the given base_path
 
     local base_path="$1"
     declare -a files_array
@@ -13,7 +13,7 @@ _source_functions() {
     # guardrail, check if given path is valid
     [[ ! -d "$base_path" ]] && { echo "Invalid path $base_path">&2; exit 1; }
 
-    # find all bash scripts in subfolders and sort them
+    # find all bash scripts in subfolders and sort them alphabeticly
     mapfile -t files_array < <(find "$base_path" -mindepth 2 -type f -name '*.sh'  | sort)
 
     # source them all
@@ -29,6 +29,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # source all bash scripts in subfolders relative to determined location
 _source_functions "$SCRIPT_DIR"
 
-# remove the function from memory
+# let's cleanup, remove the private function from memory
 unset -f _source_functions
 unset SCRIPT_DIR
