@@ -7,11 +7,10 @@ main::_procesArgs(){
 
 # Initialize an array to hold the processed arguments
     local args=("$@")
-    local processed_args=()
 
     # local functions
 
-    _hasNoValue(){
+    main::_procesArgs::_hasNoValue(){
         # argument guardrail function, to be used when an argument should have a value.
         # returns 0 when an argument has a value, returns 1 when it doesn't
 
@@ -27,7 +26,7 @@ main::_procesArgs(){
         return 0
     }
 
-    _hasValue(){
+    main::_procesArgs::_hasValue(){
         # argument guardrail function, to be used when an argument shouldn't have a value
         # retuns 0 when an argument hasn't a value, returns  when it does
 
@@ -38,21 +37,7 @@ main::_procesArgs(){
         return 0
     }
 
-    # Iterate over the arguments
-    for arg in "${args[@]}"; do
-        if [[ "$arg" == *"="* ]]; then
-            # Split the argument on the first '=' character
-            local key="${arg%%=*}"
-            local value="${arg#*=}"
-            # Add the key and value as separate elements in the array
-            processed_args+=("$key")
-            processed_args+=("$value")
-        else
-            # Add the argument as is if it doesn't contain '='
-            processed_args+=("$arg")
-        fi
-    done
-
+    local processed_args=($(common::splitArgs "${args[@]}"))
     local total_args="${#processed_args[@]}"
 
     # proces all arguments
@@ -63,27 +48,27 @@ main::_procesArgs(){
         case "$arg" in
             --fruit|-f)
                 # echo fruit argument
-                _hasNoValue || return 1
+                main::_procesArgs::_hasNoValue || return 1
                 fruit="$next_arg"
                 echo "Fruit: $fruit"
                 continue
                 ;;
             --color|-c)
                 # echo collor argument
-                _hasNoValue || return 1
+                main::_procesArgs::_hasNoValue || return 1
                 color="$next_arg"
                 echo "Color: $color"
                 continue
                 ;;
             --world|-w) 
                 # run demp function
-                _hasValue || return 1
+                main::_procesArgs::_hasValue || return 1
                 common::helloWorld
                 continue
                 ;;
             --help|-h)
                 # displays usage / help message
-                _hasValue
+                main::_procesArgs::_hasValue
                 main::_usage
                 return 0 # exit 
                 ;;
