@@ -6,7 +6,7 @@ main::_guardrails(){
     # check if we have at least one argument
     if [[ $# -eq 0 ]]; then
         echo "WARNING: Expected at least one argument, got none.">&2
-        _usage
+        main::_usage
         return 1
     fi
 }
