@@ -37,6 +37,7 @@ main::_procesArgs(){
         return 0
     }
 
+    # proces arguments and split key=value into two arguments
     local processed_args=($(common::splitArgs "${args[@]}"))
     local total_args="${#processed_args[@]}"
 
