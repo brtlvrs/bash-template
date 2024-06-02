@@ -1,4 +1,13 @@
 common::splitArgs() {
+    # This function will split an argument in format of key=value into two arguments
+    # the equal character is the divider. So --key=value, -key=value or key=value will all be split into two arguments
+    # --key,value or -key,value or key,value
+    #
+    # input(s): an array of strings
+    # output: an array of strings, by echoing it ${processed_args[@]}
+    #
+    # usage: local processed_args=($(common::splitArgs "${args[@]}"))
+       
     local args=("$@")
     local arg=""
     local processed_args=()
